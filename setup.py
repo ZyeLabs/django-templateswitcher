@@ -11,7 +11,7 @@ setup(
     url='http://github.com/praekelt/django-templateswitcher',
     packages = find_packages(),
     install_requires = [
-        'pywurfl',
+        'djangobile',
     ],
     include_package_data=True,
     classifiers = [
