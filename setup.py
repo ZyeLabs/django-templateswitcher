@@ -11,9 +11,7 @@ setup(
     url='http://github.com/praekelt/django-templateswitcher',
     packages = find_packages(),
     install_requires = [
-        'pywurfl',
-        'pyparsing',
-        'python-Levenshtein',
+        'mobile.sniffer',
     ],
     include_package_data=True,
     classifiers = [
