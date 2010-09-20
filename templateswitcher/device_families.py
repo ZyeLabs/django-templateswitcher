@@ -1,6 +1,5 @@
 def get_device_family(device):
     max_screen_width = device.get('usableDisplayWidth')
-    print max_screen_width
     
     # basic device
     if max_screen_width <= 240:
