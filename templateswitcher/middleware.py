@@ -17,8 +17,7 @@ class TemplateDirSwitcher(object):
     settings.
     """
     def process_request(self, request):
-        
-        if request.device:
+        if getattr(request, 'device', None):
             template_set = get_device_family(request.device)
             
             # switch the template dir for the given device
