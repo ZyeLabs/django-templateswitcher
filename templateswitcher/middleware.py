@@ -7,8 +7,6 @@ from mobile.sniffer.chain import ChainedSniffer
 DEVICE_FAMILIES = getattr(settings, 'DEVICE_FAMILIES', 'templateswitcher.device_families')
 device_families = __import__(DEVICE_FAMILIES)
 
-from device_families import get_device_family
-
 class TemplateDirSwitcher(object):
     """
     Template Switching Middleware. Switches template dirs by using preset conditions
@@ -18,7 +16,7 @@ class TemplateDirSwitcher(object):
     """
     def process_request(self, request):
         if getattr(request, 'device', None):
-            template_set = get_device_family(request.device)
+            template_set = device_families.get_device_family(request.device)
             
             # switch the template dir for the given device
             settings.TEMPLATE_DIRS = (
@@ -49,7 +47,7 @@ class TemplateDirSwitcher(object):
             # instantiate the sniffer and device object
             sniffer = ChainedSniffer(chained_libs)
             device_object = sniffer.sniff(request)
-            template_set = get_device_family(device_object)
+            template_set = device_families.get_device_family(device_object)
                 
             # copy the device object to the request object
             request.device = device_object
