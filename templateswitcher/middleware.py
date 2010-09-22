@@ -4,8 +4,8 @@ from django.conf import settings
 
 from mobile.sniffer.chain import ChainedSniffer
 
-DEVICE_FAMILIES = getattr(settings, 'DEVICE_FAMILIES', 'templateswitcher.device_families')
-device_families = __import__(DEVICE_FAMILIES)
+device_families_module = getattr(settings, 'DEVICE_FAMILIES')
+device_families = __import__(device_families_module)
 
 class TemplateDirSwitcher(object):
     """
