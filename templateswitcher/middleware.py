@@ -1,3 +1,4 @@
+import importlib
 import os
 
 from django.conf import settings
@@ -12,11 +13,7 @@ class TemplateDirSwitcher(object):
     settings.
     """
     def process_request(self, request):
-        device_families_module = getattr(settings, 'DEVICE_FAMILIES', 'templateswitcher.device_families')
-        exec "from %s import %s" % (
-            str().join(device_families_module.split('.')[:len(device_families_module.split('.')) - 1]),
-            device_families_module.split('.')[-1]
-        )
+        device_families = importlib.import_module(getattr(settings, 'DEVICE_FAMILIES', 'templateswitcher.device_families'))
         
         if getattr(request, 'device', None):
             template_set = device_families.get_device_family(request.device)
