@@ -10,6 +10,9 @@ setup(
     license='BSD',
     url='http://github.com/praekelt/django-templateswitcher',
     packages = find_packages(),
+    dependency_links = [
+        'https://github.com/qoda/mobile.sniffer/tarball/templateswitcher#egg=mobile.sniffer',
+    ],
     install_requires = [
         'importlib',
         'mobile.sniffer',
