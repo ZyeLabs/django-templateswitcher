@@ -14,16 +14,9 @@ class TemplateDirSwitcher(object):
     """
     def process_request(self, request):
         device_families = importlib.import_module(getattr(settings, 'DEVICE_FAMILIES', 'templateswitcher.device_families'))
+        device_obj = getattr(request, 'device', None)
         
-        if getattr(request, 'device', None):
-            template_set = device_families.get_device_family(request.device)
-            
-            # switch the template dir for the given device
-            settings.TEMPLATE_DIRS = (
-                settings.DEVICE_TEMPLATE_DIRS[template_set],
-            )
-        
-        else:
+        if not device_obj:
             # set the device switcher library according to the settings - defaults to wurfl
             device_switch_libs = getattr(settings, 'DEVICE_SWITCH_LIB', ['WurlfSniffer'])
             da_api = getattr(settings, 'DEVICE_ATLAS_API_FILE', None)
