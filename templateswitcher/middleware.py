@@ -16,8 +16,8 @@ class TemplateDirSwitcher(object):
     def process_request(self, request):
         device_families = importlib.import_module(getattr(settings, 'DEVICE_FAMILIES', 'templateswitcher.device_families'))
         device_obj = getattr(request, 'device', None)
-        device_cache_key = request.META['HTTP_USER_AGENT']
-        device_cache_key = device_cache_key.replace(' ','')
+        # Use hash as the key since UA's can be quite llong, dont want to hit memcache 250 byte limit
+        device_cache_key = hash(request.META['HTTP_USER_AGENT'])
         template_set = cache.get(device_cache_key)
         full_path = request.get_full_path()
         media_request = (full_path.startswith(settings.MEDIA_URL) or
